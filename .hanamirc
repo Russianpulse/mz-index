@@ -1,0 +1,4 @@
+project=mazavr
+architecture=container
+test=rspec
+template=slim
