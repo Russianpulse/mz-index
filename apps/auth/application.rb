@@ -87,6 +87,11 @@ module Auth
       #
       # middleware.use Rack::Protection
 
+      middleware.use Rack::Session::Cookie
+      middleware.use OmniAuth::Builder do
+        provider :identity, :fields => [:email]
+      end
+
       # Default format for the requests that don't specify an HTTP_ACCEPT header
       # Argument: A symbol representation of a mime type, defaults to :html
       #
