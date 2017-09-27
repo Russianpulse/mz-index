@@ -8,4 +8,8 @@ RUN bundle install
 
 COPY . /app/
 
-CMD ["hanami", "server", "--port", "80", "--host", "0.0.0.0"]
+EXPOSE 80
+
+COPY docker-entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["web"]

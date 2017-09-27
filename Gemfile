@@ -7,6 +7,7 @@ gem 'hanami-model', '~> 1.0'
 gem 'pg'
 
 gem 'slim'
+gem 'puma'
 
 group :development do
   # Code reloading
