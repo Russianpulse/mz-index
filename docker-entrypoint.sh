@@ -8,7 +8,7 @@ if [ "$1" = 'update' ]; then
 fi
 
 if [ "$1" = 'web' ]; then
-  bundle exec puma -C config/puma.rb -p 80 --bind 0.0.0.0
+  bundle exec puma -C config/puma.rb --bind tcp://0.0.0.0:80
 fi
 
 if [ "$1" = 'test' ]; then
