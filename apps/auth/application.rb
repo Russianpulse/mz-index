@@ -88,7 +88,7 @@ module Auth
       # middleware.use Rack::Protection
 
       middleware.use OmniAuth::Builder do
-        provider :developer
+        provider :developer, callback_path: '/me/auth/developer/callback'
       end
 
       # Default format for the requests that don't specify an HTTP_ACCEPT header

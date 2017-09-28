@@ -6,8 +6,8 @@ Hanami::Model.migration do
       column :provider, String, null: false
       column :uid, String, null: false
 
-      column :info, File, null: false
-      column :extra, File, null: false
+      column :info, File
+      column :extra, File
 
       foreign_key :user_id, :users, null: false
 
