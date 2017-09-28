@@ -1,4 +1,4 @@
-module Auth::Controllers::Session
+module Auth::Controllers::Sessions
   class New
     include Auth::Action
 

@@ -1,6 +1,6 @@
-require_relative '../../../../apps/auth/controllers/session/new'
+require_relative '../../../../apps/auth/controllers/sessions/new'
 
-RSpec.describe Auth::Controllers::Session::New do
+RSpec.describe Auth::Controllers::Sessions::New do
   let(:action) { described_class.new }
   let(:params) { Hash[] }
 
