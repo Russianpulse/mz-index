@@ -3,9 +3,6 @@ GEM
   specs:
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
-    bcrypt (3.1.11)
-    bcrypt-ruby (3.1.5)
-      bcrypt (>= 3.1.3)
     capybara (2.15.1)
       addressable
       mini_mime (>= 0.1.3)
@@ -111,9 +108,6 @@ GEM
     omniauth (1.6.1)
       hashie (>= 3.4.6, < 3.6.0)
       rack (>= 1.6.2, < 3)
-    omniauth-identity (1.1.1)
-      bcrypt-ruby (~> 3.0)
-      omniauth (~> 1.0)
     pg (0.21.0)
     public_suffix (3.0.0)
     puma (3.10.0)
@@ -180,7 +174,6 @@ DEPENDENCIES
   hanami (~> 1.0)
   hanami-model (~> 1.0)
   omniauth
-  omniauth-identity
   pg
   puma
   rake

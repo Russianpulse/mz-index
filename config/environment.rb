@@ -6,7 +6,7 @@ require_relative '../apps/auth/application'
 require_relative '../apps/web/application'
 
 Hanami.configure do
-  mount Auth::Application, at: '/auth'
+  mount Auth::Application, at: '/me/'
   mount Web::Application, at: '/'
 
   model do

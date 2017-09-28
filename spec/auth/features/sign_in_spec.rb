@@ -2,12 +2,13 @@ require 'features_helper'
 
 RSpec.feature 'Sign in feature' do
   scenario 'A user can sign in' do
-    visit '/auth'
+    visit '/me'
 
-    fill_in 'Login', with: 'user@email.com'
-    fill_in 'Password', with: 'secret123'
-    click_on 'Login'
+    click_on 'Login with Test Provider'
+    fill_in 'Name', with: 'Roger Wilco'
+    fill_in 'Email', with: 'roger.wilco@spacequest.com'
+    click_on 'Sign In'
 
-    expect(page).to have_content 'Hello User!'
+    expect(page).to have_content 'Hello Roger Wilco!'
   end
 end

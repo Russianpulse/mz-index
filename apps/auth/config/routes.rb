@@ -3,5 +3,4 @@
 #
 # Example:
 # get '/hello', to: ->(env) { [200, {}, ['Hello from Hanami!']] }
-get '/', to: 'session#new'
-
+get '/', to: 'session#new', as: :auth

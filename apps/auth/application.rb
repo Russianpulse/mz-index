@@ -81,15 +81,14 @@ module Auth
       #
       # See: http://www.rubydoc.info/gems/rack/Rack/Session/Cookie
       #
-      # sessions :cookie, secret: ENV['AUTH_SESSIONS_SECRET']
+      sessions :cookie, secret: ENV['AUTH_SESSIONS_SECRET']
 
       # Configure Rack middleware for this application
       #
       # middleware.use Rack::Protection
 
-      middleware.use Rack::Session::Cookie
       middleware.use OmniAuth::Builder do
-        provider :identity, :fields => [:email]
+        provider :developer
       end
 
       # Default format for the requests that don't specify an HTTP_ACCEPT header

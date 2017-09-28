@@ -10,7 +10,6 @@ gem 'slim'
 gem 'puma'
 
 gem 'omniauth'
-gem 'omniauth-identity'
 
 group :development do
   # Code reloading
