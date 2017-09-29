@@ -19,6 +19,7 @@ class UloginRepository
   end
 
   def user_info
+    puts user_info_json.inspect
     UserInfo.new(
       first_name: user_info_json[:first_name],
       last_name: user_info_json[:last_name],
@@ -28,8 +29,10 @@ class UloginRepository
   end
 
   def user_info_json
+     Hanami::Utils::Hash.symbolize JSON.parse(user_info_raw)
   end
 
   def user_info_raw
+    @user_info_raw ||= open("http://ulogin.ru/token.php?token=#{@token}&host=#{ENV.fetch('DOMAIN_NAME')}").read
   end
 end

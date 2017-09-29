@@ -41,7 +41,6 @@ module Auth::Controllers::Sessions
     # {"last_name"=>"Удалов", "uid"=>"111385910029480216808", "identity"=>"https://plus.google.com/u/0/111385910029480216808/", "network"=>"google", "first_name"=>"Сергей", "profile"=>"https://plus.google.com/+СергейУдалов"}
     def user_info
       ulogin_repository.user_info
-      #JSON.parse open("http://ulogin.ru/token.php?token=#{@params[:token]}&host=#{ENV.fetch('DOMAIN_NAME')}").read
     end
 
     def verify_csrf_token?
