@@ -10,6 +10,7 @@ gem 'slim'
 gem 'puma'
 
 gem 'omniauth'
+gem 'omniauth-yandex'
 
 group :development do
   # Code reloading

@@ -89,6 +89,7 @@ module Auth
 
       middleware.use OmniAuth::Builder do
         provider :developer, callback_path: '/me/auth/developer/callback'
+        provider :yandex, ENV['YANDEX_KEY'], ENV['YANDEX_PRIVATE_KEY']
       end
 
       # Default format for the requests that don't specify an HTTP_ACCEPT header
