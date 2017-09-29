@@ -4,6 +4,7 @@ RSpec.describe Auth::Controllers::Sessions::Create do
   let(:action) { described_class.new }
   let(:params) { { token: 'abc123aaaaaaaaaaaaaaaaaaaaa' } }
   let(:user_repository) { UserRepository.new }
+  let(:identity_repository) { IdentityRepository.new }
   let(:user_info) do
     { last_name: 'Wilco', uid: '12345', identity: 'http://vk.com/id12345',
       network: 'vkontakte', first_name: 'Roger', profile: 'http://vk.com/id143148639'}
@@ -21,5 +22,9 @@ RSpec.describe Auth::Controllers::Sessions::Create do
 
     user = user_repository.first
     expect(user.name).to eq 'Roger Wilco'
+
+    identity = identity_repository.first
+    expect(identity.provider).to eq 'vkontakte'
+    expect(identity.uid).to eq 'http://vk.com/id12345'
   end
 end

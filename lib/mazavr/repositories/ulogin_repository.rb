@@ -22,8 +22,8 @@ class UloginRepository
     UserInfo.new(
       first_name: user_info_json[:first_name],
       last_name: user_info_json[:last_name],
-      network: 'vkontakte',
-      identity: '123',
+      network: user_info_json[:network],
+      identity: user_info_json[:identity],
     )
   end
 
