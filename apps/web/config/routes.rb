@@ -4,4 +4,4 @@
 # Example:
 # get '/hello', to: ->(env) { [200, {}, ['Hello from Hanami!']] }
 get '/', to: 'home#index'
-get '/12bad61b9a47.html', to: ->(env) { [200, {}, ['02e342a22fc7']] }
+get '/9e94f40418cd.html', to: ->(env) { [200, {}, ['73cb141f6c46']] }
