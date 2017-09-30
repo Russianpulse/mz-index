@@ -4,8 +4,6 @@ module Auth::Controllers::Sessions
   class Create
     include Auth::Action
 
-    expose :user
-
     def call(params)
       @params = params
 
@@ -19,7 +17,9 @@ module Auth::Controllers::Sessions
         uid: user_info.identity,
       )
 
-      @user = user
+      session[:user_id] = user.id
+
+      redirect_to '/me'
     end
 
     private
@@ -36,9 +36,6 @@ module Auth::Controllers::Sessions
       UserRepository.new
     end
 
-    # {"last_name"=>"Удалов", "uid"=>"143148639", "identity"=>"http://vk.com/id143148639", "network"=>"vkontakte", "first_name"=>"Сергей", "profile"=>"http://vk.com/id143148639"}"
-    #
-    # {"last_name"=>"Удалов", "uid"=>"111385910029480216808", "identity"=>"https://plus.google.com/u/0/111385910029480216808/", "network"=>"google", "first_name"=>"Сергей", "profile"=>"https://plus.google.com/+СергейУдалов"}
     def user_info
       ulogin_repository.user_info
     end

@@ -19,7 +19,6 @@ class UloginRepository
   end
 
   def user_info
-    puts user_info_json.inspect
     UserInfo.new(
       first_name: user_info_json[:first_name],
       last_name: user_info_json[:last_name],
