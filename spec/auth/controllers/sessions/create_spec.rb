@@ -15,7 +15,6 @@ RSpec.describe Auth::Controllers::Sessions::Create do
   end
 
   it 'should register a user' do
-    puts action.class
     expect do
       action.call params
     end.to change { user_repository.count }.by(1)
@@ -26,5 +25,23 @@ RSpec.describe Auth::Controllers::Sessions::Create do
     identity = identity_repository.first
     expect(identity.provider).to eq 'vkontakte'
     expect(identity.uid).to eq 'http://vk.com/id12345'
+  end
+
+  context 'when user exists' do
+    before do
+      user = user_repository.create(name: 'Roger Wilco')
+
+      identity_repository.create(
+        user_id: user.id,
+        provider: 'vkontakte',
+        uid: 'http://vk.com/id12345',
+      )
+    end
+
+    it 'should not register another user' do
+      expect do
+        action.call params
+      end.not_to change { user_repository.count }
+    end
   end
 end

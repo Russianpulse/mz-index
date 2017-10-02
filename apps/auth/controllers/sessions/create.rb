@@ -7,16 +7,6 @@ module Auth::Controllers::Sessions
     def call(params)
       @params = params
 
-      user = user_repository.create(
-        name: user_info.name
-      )
-
-      identity_repository.create(
-        user_id: user.id,
-        provider: user_info.network,
-        uid: user_info.identity,
-      )
-
       session[:user_id] = user.id
 
       redirect_to '/me'
@@ -24,8 +14,44 @@ module Auth::Controllers::Sessions
 
     private
 
+    def find_user_by_identity
+      identity = identity_repository.find_by_uid(new_identity.uid)
+      user_repository.find(identity.user_id)
+    end
+
+    def user
+      @user ||= if identity_exists?
+                  find_user_by_identity
+                else
+                  register_new_user
+                end
+    end
+
+    def register_new_user
+      u = user_repository.create(
+        name: user_info.name
+      )
+
+      identity_repository.create(
+        user_id: u.id,
+        provider: user_info.network,
+        uid: user_info.identity,
+      )
+    end
+
+    def new_identity
+      Identity.new(
+        provider: user_info.network,
+        uid: user_info.identity
+      )
+    end
+
+    def identity_exists?
+      !identity_repository.find_by_uid(new_identity.uid).nil?
+    end
+
     def ulogin_repository
-      ulogin_repository = UloginRepository.new(params[:token])
+      ulogin_repository ||= UloginRepository.new(params[:token])
     end
 
     def identity_repository
