@@ -11,6 +11,7 @@ gem 'puma'
 
 gem 'omniauth'
 gem 'omniauth-yandex'
+gem 'jwt'
 
 group :development do
   # Code reloading

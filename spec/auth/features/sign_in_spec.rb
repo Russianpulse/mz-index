@@ -1,6 +1,6 @@
 require 'features_helper'
 
-RSpec.feature 'Sign in feature' do
+RSpec.feature 'Sign in feature', skip: true do
   scenario 'A user can sign in' do
     visit '/me'
 

@@ -198,6 +198,7 @@ DEPENDENCIES
   dotenv (~> 2.0)
   hanami (~> 1.0)
   hanami-model (~> 1.0)
+  jwt
   omniauth
   omniauth-yandex
   pg
