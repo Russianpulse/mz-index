@@ -6,6 +6,6 @@ RSpec.describe Auth::Controllers::Sessions::Destroy do
 
   it 'should drop session' do
     response = action.call(params)
-    expect(response[0]).to eq 300
+    expect(response[0]).to eq 302
   end
 end

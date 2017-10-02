@@ -32,18 +32,15 @@ module Auth::Controllers::Sessions
         name: user_info.name
       )
 
-      identity_repository.create(
-        user_id: u.id,
-        provider: user_info.network,
-        uid: user_info.identity,
-      )
+      identity_repository.create identity_attributes.merge(user_id: u.id)
+    end
+
+    def identity_attributes
+      { provider: user_info.network, uid: user_info.identity, extra: user_info.raw_data }
     end
 
     def new_identity
-      Identity.new(
-        provider: user_info.network,
-        uid: user_info.identity
-      )
+      Identity.new identity_attributes
     end
 
     def identity_exists?

@@ -8,6 +8,7 @@ class UloginRepository
     attribute :last_name, Types::Strict::String
     attribute :network, Types::Strict::String
     attribute :identity, Types::Strict::String
+    attribute :raw_data, Types::Strict::String.optional
 
     def name
       "#{first_name} #{last_name}"
@@ -24,6 +25,7 @@ class UloginRepository
       last_name: user_info_json[:last_name],
       network: user_info_json[:network],
       identity: user_info_json[:identity],
+      raw_data: user_info_raw
     )
   end
 
