@@ -9,7 +9,6 @@ module Auth::Controllers::Profile
       redirect_to '/me/auth' if user.nil?
 
       @user = user
-
     end
 
     private

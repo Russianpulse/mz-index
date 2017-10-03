@@ -39,9 +39,20 @@
   var Mazavr = window.$mz = window.$mz || function() {};
 
   var Auth = function() {
-    if(!this.token()) {
+    if(!this.isTokenFresh()) {
       this.refreshToken();
     }
+  };
+
+  Auth.prototype.isTokenFresh = function() {
+    if(!!getCookie('mz.token.fresh')) {
+      console.log('token is fresh');
+      return true;
+    } else {
+      console.log('token is old');
+      return false;
+    }
+
   };
 
   Auth.prototype.token = function() {
@@ -50,7 +61,12 @@
 
   Auth.prototype.refreshToken = function() {
     var req = $.getJSON("http://local.mazavr.com:2300/me/api/token").done(function(data) {
-      setCookie('mz.token', data.token, { expires: 30, path: '/' })
+      if(data.status == 'user') {
+        setCookie('mz.token.fresh', true, { expires: data.expires_in / 2, path: '/' })
+        setCookie('mz.token', data.token, { expires: data.expires_in, path: '/' })
+      } else {
+        console.log('guest');
+      }
     }).fail(function(data) {
       console.log('failed to get new token', data);
     });
