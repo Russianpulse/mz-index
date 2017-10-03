@@ -3,6 +3,8 @@
 #
 # Example:
 # get '/hello', to: ->(env) { [200, {}, ['Hello from Hanami!']] }
+get '/api/token', to: 'api#token'
+get '/api/auth.js', to: 'api#js'
 get '/logout', to: 'sessions#destroy'
 get '/', to: 'profile#show', as: :profile
 get '/json', to: 'profile#show', as: :profile

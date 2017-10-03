@@ -10,18 +10,9 @@ module Auth::Controllers::Profile
 
       @user = user
 
-      if params[:format] == 'jwt'
-        self.format = :jwt
-        self.body = user_info_jwt
-      end
-
     end
 
     private
-
-    def user_info_jwt
-      JWT.encode({ id: 123, t: Time.now.to_i }, ENV.fetch('JWT_SECRET'), 'HS256')
-    end
 
     def user_repository
       UserRepository.new
