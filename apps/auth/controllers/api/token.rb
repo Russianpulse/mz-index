@@ -20,7 +20,7 @@ module Auth::Controllers::Api
     private
 
     def user_info_jwt
-      JWT.encode({ id: 123, expires_at: expires_at }, ENV.fetch('JWT_SECRET'), 'HS256')
+      JWT.encode({ id: user.id, expires_at: expires_at }, ENV.fetch('JWT_SECRET'), 'HS256')
     end
 
     def expires_at

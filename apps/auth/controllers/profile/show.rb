@@ -1,7 +1,6 @@
 module Auth::Controllers::Profile
   class Show
     include Auth::Action
-    accept :html, :json
 
     expose :user
 

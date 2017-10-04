@@ -87,11 +87,6 @@ module Auth
       #
       # middleware.use Rack::Protection
 
-      middleware.use OmniAuth::Builder do
-        provider :developer, callback_path: '/me/auth/developer/callback'
-        provider :yandex, ENV['YANDEX_KEY'], ENV['YANDEX_PRIVATE_KEY']
-      end
-
       # Default format for the requests that don't specify an HTTP_ACCEPT header
       # Argument: A symbol representation of a mime type, defaults to :html
       #
@@ -133,6 +128,7 @@ module Auth
       # ASSETS
       #
       assets do
+        compile true
         # JavaScript compressor
         #
         # Supported engines:
@@ -163,7 +159,7 @@ module Auth
         # Specify sources for assets
         #
         sources << [
-          'assets'
+          'assets',
         ]
       end
 

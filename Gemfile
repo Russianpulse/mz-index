@@ -9,9 +9,8 @@ gem 'pg'
 gem 'slim'
 gem 'puma'
 
-gem 'omniauth'
-gem 'omniauth-yandex'
 gem 'jwt'
+gem 'opal'
 
 group :development do
   # Code reloading
