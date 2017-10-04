@@ -1,13 +1,8 @@
-require 'stringio'
+%x{
+!function(e){var n=!1;if("function"==typeof define&&define.amd&&(define(e),n=!0),"object"==typeof exports&&(module.exports=e(),n=!0),!n){var o=window.Cookies,t=window.Cookies=e();t.noConflict=function(){return window.Cookies=o,t}}}(function(){function e(){for(var e=0,n={};e<arguments.length;e++){var o=arguments[e];for(var t in o)n[t]=o[t]}return n}function n(o){function t(n,r,i){var c;if("undefined"!=typeof document){if(arguments.length>1){if(i=e({path:"/"},t.defaults,i),"number"==typeof i.expires){var a=new Date;a.setMilliseconds(a.getMilliseconds()+864e5*i.expires),i.expires=a}i.expires=i.expires?i.expires.toUTCString():"";try{c=JSON.stringify(r),/^[\{\[]/.test(c)&&(r=c)}catch(e){}r=o.write?o.write(r,n):encodeURIComponent(String(r)).replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g,decodeURIComponent),n=encodeURIComponent(String(n)),n=n.replace(/%(23|24|26|2B|5E|60|7C)/g,decodeURIComponent),n=n.replace(/[\(\)]/g,escape);var f="";for(var s in i)i[s]&&(f+="; "+s,i[s]!==!0&&(f+="="+i[s]));return document.cookie=n+"="+r+f}n||(c={});for(var p=document.cookie?document.cookie.split("; "):[],d=0;d<p.length;d++){var u=p[d].split("="),l=u.slice(1).join("=");'"'===l.charAt(0)&&(l=l.slice(1,-1));try{var g=u[0].replace(/(%[0-9A-Z]{2})+/g,decodeURIComponent);if(l=o.read?o.read(l,g):o(l,g)||l.replace(/(%[0-9A-Z]{2})+/g,decodeURIComponent),this.json)try{l=JSON.parse(l)}catch(e){}if(n===g){c=l;break}n||(c[g]=l)}catch(e){}}return c}}return t.set=t,t.get=function(e){return t.call(t,e)},t.getJSON=function(){return t.apply({json:!0},[].slice.call(arguments))},t.defaults={},t.remove=function(n,o){t(n,"",e(o,{expires:-1}))},t.withConverter=n,t}return n(function(){})});
+//# sourceMappingURL=js.cookie.min.js.map
+}
 
-module Browser
-
-# Allows manipulation of browser cookies.
-#
-# @see https://developer.mozilla.org/en-US/docs/Web/API/document.cookie
-#
-# Usage:
-#
 #   cookies = Browser::Cookies.new(`document`)
 #   cookies["my-cookie"] = "monster"
 #   cookies.delete("my-cookie")
@@ -23,11 +18,7 @@ class Cookies
 
   attr_reader :options
 
-  # Create a new {Cookies} wrapper.
-  #
-  # @param document [native] the native document object
-  def initialize(document)
-    @document = document
+  def initialize
     @options  = DEFAULT.dup
   end
 
@@ -37,15 +28,7 @@ class Cookies
   #
   # @return [Object]
   def [](name)
-    matches = `#@document.cookie`.scan(/#{Regexp.escape(name.encode_uri_component)}=([^;]*)/)
-
-    return if matches.empty?
-
-    result = matches.flatten.map {|value|
-      JSON.parse(value.decode_uri_component)
-    }
-
-    result.length == 1 ? result.first : result
+    `Cookies.get(name)`
   end
 
   # Set a cookie.
@@ -60,22 +43,20 @@ class Cookies
   # @option options [String]  :domain  the domain the cookie is valid on
   # @option options [Boolean] :secure  whether the cookie is secure or not
   def []=(name, value, options = {})
-    string = value.is_a?(String) ? value : JSON.dump(value)
-    encoded_value = encode(name, string, @options.merge(options))
-    `#@document.cookie = #{encoded_value}`
+    puts "Set cookie #{name} = #{value}"
+    `Cookies.set(name, value)`
   end
 
   # Delete a cookie.
   #
   # @param name [String] the name of the cookie
   def delete(name)
-    `#@document.cookie = #{encode name, '', expires: Time.now}`
   end
 
   # @!attribute [r] keys
   # @return [Array<String>] all the cookie names
   def keys
-    Array(`#@document.cookie.split(/; /)`).map {|cookie|
+    Array(`document.cookie.split(/; /)`).map {|cookie|
       cookie.split(/\s*=\s*/).first
     }
   end
@@ -103,31 +84,4 @@ class Cookies
 
     self
   end
-
-  # Delete all the cookies
-  #
-  # @return [self]
-  def clear
-    keys.each {|key|
-      delete key
-    }
-
-    self
-  end
-
-protected
-  def encode(key, value, options = {})
-    io = StringIO.new
-
-    io << key.encode_uri_component << ?= << value.encode_uri_component << '; '
-
-    io << 'max-age=' << options[:max_age] << '; '        if options[:max_age]
-    io << 'expires=' << options[:expires].utc << '; '    if options[:expires]
-    io << 'path='    << options[:path] << '; '           if options[:path]
-    io << 'domain='  << options[:domain] << '; '         if options[:domain]
-    io << 'secure'                                       if options[:secure]
-
-    io.string
-  end
-end
 end

@@ -4,18 +4,21 @@ require 'cookies'
 class Auth
   attr_reader :cookies
 
+  DOMAIN = 'local.mazavr.com:2300'
+
   def initialize
-    @cookies = Browser::Cookies.new `document`
+    @cookies = Cookies.new
   end
 
   def login
-    puts :login
-    req = `$.getJSON("http://local.mazavr.com:2300/me/api/token")`
+    req = `$.getJSON('//'+#{DOMAIN}+'/me/api/token')`
 
-    Native(req).done do |data|
+    Native(req).done do |d|
+      data = Native(d)
+      
       case data[:status]
       when :user
-        save_cookies data[:token]
+        save_cookies data[:token], data[:expires_in]
       else
         clear_cookies
       end
@@ -24,10 +27,14 @@ class Auth
 
   private
 
-  def save_cookies
+
+  def save_cookies(token, expires_in)
+    puts token
+    puts expires_in
   end
 
   def clear_cookies
+    puts "Go to https://#{DOMAIN}/me to login"
   end
 
   def token
