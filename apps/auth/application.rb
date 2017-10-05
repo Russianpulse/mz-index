@@ -249,6 +249,7 @@ module Auth
         media-src 'self'
       }
 
+
       # These policies are disabled to enable uLogin
       #   default-src 'none';
       #   frame-src 'self';

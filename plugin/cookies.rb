@@ -14,8 +14,6 @@ class Cookies
     secure:  false
   }
 
-  include Enumerable
-
   attr_reader :options
 
   def initialize
@@ -27,8 +25,8 @@ class Cookies
   # @param name [String] the name of the cookie
   #
   # @return [Object]
-  def [](name)
-    `Cookies.get(name)`
+  def read(name)
+    Native(`Cookies.get(name)`)
   end
 
   # Set a cookie.
@@ -42,9 +40,11 @@ class Cookies
   # @option options [String]  :path    the path the cookie is valid on
   # @option options [String]  :domain  the domain the cookie is valid on
   # @option options [Boolean] :secure  whether the cookie is secure or not
-  def []=(name, value, options = {})
-    puts "Set cookie #{name} = #{value}"
-    `Cookies.set(name, value)`
+  def write(name, value, opts = {})
+    opts = options.merge(opts)
+    pp opts
+    `console.log(opts)`
+    `Cookies.set(name, value, opts)`
   end
 
   # Delete a cookie.
@@ -67,21 +67,5 @@ class Cookies
     keys.map {|key|
       self[key]
     }
-  end
-
-  # Enumerate the cookies.
-  #
-  # @yieldparam key [String] the name of the cookie
-  # @yieldparam value [String] the value of the cookie
-  #
-  # @return [self]
-  def each(&block)
-    return enum_for :each unless block
-
-    keys.each {|key|
-      yield key, self[key]
-    }
-
-    self
   end
 end

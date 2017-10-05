@@ -1,5 +1,6 @@
 require 'native'
 require 'cookies'
+require 'pp'
 
 class Auth
   attr_reader :cookies
@@ -8,10 +9,17 @@ class Auth
 
   def initialize
     @cookies = Cookies.new
+    puts cookies.read(:t)
+    cookies.write :t, 1234
   end
 
   def login
-    req = `$.getJSON('//'+#{DOMAIN}+'/me/api/token')`
+    options = {
+      crossDomain: true,
+      dataType: 'jsonp'
+
+    }
+    req = `$.ajax('//'+#{DOMAIN}+'/me/api/token', options)`
 
     Native(req).done do |d|
       data = Native(d)
