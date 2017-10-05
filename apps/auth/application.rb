@@ -189,7 +189,7 @@ module Auth
       #   * https://msdn.microsoft.com/en-us/library/gg622941%28v=vs.85%29.aspx
       #   * https://blogs.msdn.microsoft.com/ie/2008/09/02/ie8-security-part-vi-beta-2-update
       #
-      security.x_content_type_options 'nosniff'
+      #security.x_content_type_options 'nosniff'
 
       # X-XSS-Protection is a HTTP header to determine the behavior of the
       # browser in case an XSS attack is detected.
@@ -199,7 +199,7 @@ module Auth
       #   * https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
       #   * https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#X-XSS-Protection
       #
-      security.x_xss_protection '1; mode=block'
+      #security.x_xss_protection '1; mode=block'
 
       # Content-Security-Policy (CSP) is a HTTP header supported by modern
       # browsers. It determines trusted sources of execution for dynamic
@@ -238,16 +238,17 @@ module Auth
       #
       #
       security.content_security_policy %{
-        form-action 'self';
-        frame-ancestors 'self';
-        base-uri 'self';
-        connect-src 'self';
-        img-src 'self' https: data:;
-        style-src 'self' 'unsafe-inline' https:;
-        font-src 'self';
-        object-src 'none';
-        media-src 'self'
       }
+
+      # form-action 'self';
+      # frame-ancestors 'self';
+      # base-uri 'self';
+      # connect-src 'self';
+      # img-src 'self' https: data:;
+      # style-src 'self' 'unsafe-inline' https:;
+      # font-src 'self';
+      # object-src 'none';
+      # media-src 'self'
 
 
       # These policies are disabled to enable uLogin

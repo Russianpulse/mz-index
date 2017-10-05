@@ -15,11 +15,10 @@ class Auth
 
   def login
     options = {
-      crossDomain: true,
-      dataType: 'jsonp'
-
+      dataType: 'jsonp',
+      crossDomain: true
     }
-    req = `$.ajax('//'+#{DOMAIN}+'/me/api/token', options)`
+    req = `$.ajax('//'+#{DOMAIN}+'/me/api/token', #{options.to_n})`
 
     Native(req).done do |d|
       data = Native(d)

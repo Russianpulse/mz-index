@@ -10,10 +10,11 @@ module Auth::Controllers::Api
       #header("Access-Control-Allow-Methods: GET, POST");
       #header("Access-Control-Allow-Headers: Content-Type, *");
       
-     #self.headers.merge!({ 'Access-Control-Allow-Origin' => '*' })
-     #self.headers.merge!({ 'Access-Control-Allow-Credentials' => 'true' })
-     #self.headers.merge!({ 'Access-Control-Allow-Methods' => 'GET, POST' })
-     #self.headers.merge!({ 'Access-Control-Allow-Headers' => 'Content-Type, *' })
+     #self.headers.delete 'Content-Security-Policy'
+     self.headers.merge!({ 'Access-Control-Allow-Origin' => '*' })
+     self.headers.merge!({ 'Access-Control-Allow-Credentials' => 'true' })
+     self.headers.merge!({ 'Access-Control-Allow-Methods' => 'GET, POST' })
+     self.headers.merge!({ 'Access-Control-Allow-Headers' => 'Content-Type, *' })
 
       self.format = :json
 
@@ -23,7 +24,7 @@ module Auth::Controllers::Api
                { status: :user, token: user_info_jwt, expires_in: EXPIRES_IN_SECONDS }
              end
 
-      self.body = to_jsonp(data)
+      self.body = params[:callback].nil? ? data.to_json :  to_jsonp(data)
     end
 
     private

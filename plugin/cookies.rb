@@ -42,9 +42,7 @@ class Cookies
   # @option options [Boolean] :secure  whether the cookie is secure or not
   def write(name, value, opts = {})
     opts = options.merge(opts)
-    pp opts
-    `console.log(opts)`
-    `Cookies.set(name, value, opts)`
+    `Cookies.set(name, #{value.to_n}, #{opts.to_n})`
   end
 
   # Delete a cookie.
